@@ -1,7 +1,17 @@
 set (SOURCES main.c)
-add_executable (ffdd ${SOURCES})
 
 find_package (PkgConfig REQUIRED)
+
+execute_process(
+    COMMAND ${PKG_CONFIG_EXECUTABLE} --variable=glib_compile_resources gio-2.0 OUTPUT_VARIABLE GLIB_COMPILE_RESOURCES
+    OUTPUT_STRIP_TRAILING_WHITESPACE)
+
+add_custom_command(OUTPUT resources.c
+    COMMAND ${GLIB_COMPILE_RESOURCES}
+    ${CMAKE_CURRENT_SOURCE_DIR}/res/ui/ffdd.gresource.xml --target=${CMAKE_CURRENT_BINARY_DIR}/resources.c --sourcedir=${CMAKE_CURRENT_SOURCE_DIR}/res --generate-source)
+
+add_executable (ffdd ${SOURCES} resources.c)
+
 
 pkg_check_modules (GTK3 REQUIRED gtk+-3.0)
 include_directories (${GTK3_INCLUDE_DIRS})
