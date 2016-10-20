@@ -1,4 +1,4 @@
-set (SOURCES main.c)
+set (SOURCES main.c ffddapplication.c ffddwindow.c)
 
 find_package (PkgConfig REQUIRED)
 

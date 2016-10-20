@@ -35,7 +35,7 @@
 #include <gtk/gtk.h>
 
 #define	FFDD_TYPE_APPLICATION (ffdd_application_get_type())
-#define	FFDD_APPLICATION(obj) (G_TYPE_CHECK_INSTANCE((obj)		      \
+#define	FFDD_APPLICATION(obj) (G_TYPE_CHECK_INSTANCE_CAST((obj),	      \
 	FFDD_TYPE_APPLICATION, FfddApplication))
 
 typedef struct _FfddApplication FfddApplication;

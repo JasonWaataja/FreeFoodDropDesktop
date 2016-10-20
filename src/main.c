@@ -31,8 +31,17 @@
 
 #include <stdio.h>
 
+#include "ffddapplication.h"
+
 int
 main(int argc, char *argv[])
 {
-	printf("Hello World\n");
+	FfddApplication *app;
+	int status;
+
+	app = ffdd_application_new();
+	status = g_application_run(G_APPLICATION(app), argc, argv);
+	g_object_unref(G_OBJECT(app));
+
+	return (status);
 }

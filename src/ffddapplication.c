@@ -66,7 +66,7 @@ ffdd_application_activate(GApplication *app)
 	FfddApplicationPrivate *priv;
 
 	priv = ffdd_application_get_instance_private(FFDD_APPLICATION(app));
-	priv->win = ffdd_window_new(FFDD_APPLICATON(app));
+	priv->win = ffdd_window_new(FFDD_APPLICATION(app));
 
 	gtk_window_present(GTK_WINDOW(priv->win));
 }
