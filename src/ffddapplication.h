@@ -29,21 +29,20 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef _FFDDWINDOW_H_
-#define	_FFDDWINDOW_H_
+#ifndef _FFDDAPPLICATION_H_
+#define _FFDDAPPLICATION_H_
 
 #include <gtk/gtk.h>
 
-#include "ffddapplication.h"
+#define	FFDD_TYPE_APPLICATION (ffdd_application_get_type())
+#define	FFDD_APPLICATION(obj) (G_TYPE_CHECK_INSTANCE((obj)		      \
+	FFDD_TYPE_APPLICATION, FfddApplication))
 
-#define FFDD_TYPE_WINDOW (ffdd_window_get_type())
-#define	FFDD_WINDOW(obj) (G_TYPE_CHECK_INSTANCE_CAST((obj), FFDD_TYPE_WINDOW, \
-	FfddWindow))
+typedef struct _FfddApplication FfddApplication;
+typedef struct _FfddApplicationClass FfddApplicationClass;
 
-typedef struct _FfddWindow FfddWindow;
-typedef struct _FfddWindowClass FfddWindowClass;
+GType		 ffdd_application_get_type(void);
+FfddApplication	*ffdd_application_new(void);
+		
 
-GType		 ffdd_window_get_type(void);
-FfddWindow	*ffdd_window_new(FfddApplication *app);
-
-#endif /* _FFDWINDOW_H_ */
+#endif /* !_FFDDAPPLICATION_H_ */

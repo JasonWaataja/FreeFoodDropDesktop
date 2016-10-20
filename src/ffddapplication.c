@@ -29,21 +29,58 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef _FFDDWINDOW_H_
-#define	_FFDDWINDOW_H_
-
-#include <gtk/gtk.h>
-
 #include "ffddapplication.h"
+#include "ffddwindow.h"
 
-#define FFDD_TYPE_WINDOW (ffdd_window_get_type())
-#define	FFDD_WINDOW(obj) (G_TYPE_CHECK_INSTANCE_CAST((obj), FFDD_TYPE_WINDOW, \
-	FfddWindow))
+struct _FfddApplication {
+	GtkApplication parent;
+};
 
-typedef struct _FfddWindow FfddWindow;
-typedef struct _FfddWindowClass FfddWindowClass;
+struct _FfddApplicationClass {
+	GtkApplicationClass parent;
+};
 
-GType		 ffdd_window_get_type(void);
-FfddWindow	*ffdd_window_new(FfddApplication *app);
+typedef struct _FfddApplicationPrivate FfddApplicationPrivate;
 
-#endif /* _FFDWINDOW_H_ */
+struct _FfddApplicationPrivate {
+	FfddWindow *win;
+};
+
+G_DEFINE_TYPE_WITH_PRIVATE(FfddApplication, ffdd_application,
+    GTK_TYPE_APPLICATION);
+
+static void
+ffdd_application_init(FfddApplication *app)
+{
+}
+
+static void
+ffdd_application_startup(GApplication *app)
+{
+	G_APPLICATION_CLASS(ffdd_application_parent_class)->startup(app);
+}
+
+static void
+ffdd_application_activate(GApplication *app)
+{
+	FfddApplicationPrivate *priv;
+
+	priv = ffdd_application_get_instance_private(FFDD_APPLICATION(app));
+	priv->win = ffdd_window_new(FFDD_APPLICATON(app));
+
+	gtk_window_present(GTK_WINDOW(priv->win));
+}
+
+static void
+ffdd_application_class_init(FfddApplicationClass *kclass)
+{
+	G_APPLICATION_CLASS(kclass)->startup = ffdd_application_startup;
+	G_APPLICATION_CLASS(kclass)->activate = ffdd_application_activate;
+}
+
+FfddApplication *
+ffdd_application_new(void)
+{
+	return (g_object_new(FFDD_TYPE_APPLICATION, "application-id",
+	    "com.waataja.ffdd", NULL));
+}

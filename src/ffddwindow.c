@@ -29,21 +29,45 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef _FFDDWINDOW_H_
-#define	_FFDDWINDOW_H_
+#include "ffddwindow.h"
 
-#include <gtk/gtk.h>
+struct _FfddWindow {
+	GtkApplicationWindow parent;
+};
 
-#include "ffddapplication.h"
+struct _FfddWindowClass {
+	GtkApplicationWindowClass parent_class;
+};
 
-#define FFDD_TYPE_WINDOW (ffdd_window_get_type())
-#define	FFDD_WINDOW(obj) (G_TYPE_CHECK_INSTANCE_CAST((obj), FFDD_TYPE_WINDOW, \
-	FfddWindow))
+typedef struct _FfddWindowPrivate FfddWindowPrivate;
 
-typedef struct _FfddWindow FfddWindow;
-typedef struct _FfddWindowClass FfddWindowClass;
+struct _FfddWindowPrivate {
+};
 
-GType		 ffdd_window_get_type(void);
-FfddWindow	*ffdd_window_new(FfddApplication *app);
+G_DEFINE_TYPE_WITH_PRIVATE(FfddWindow, ffdd_window,
+    GTK_TYPE_APPLICATION_WINDOW);
 
-#endif /* _FFDWINDOW_H_ */
+static void
+ffdd_window_init(FfddWindow *win)
+{
+	FfddWindow *priv;
+
+	priv = ffdd_window_get_instance_private(win);
+	gtk_widget_init_template(GTK_WIDGET(win));
+}
+
+static void
+ffdd_window_class_init(FfddWindowClass *kclass)
+{
+	gtk_widget_class_set_template_from_resource(GTK_WIDGET_CLASS(kclass),
+	    "/com/waataja/ffdd/ui/mainwindow.ui");
+}
+
+FfddWindow *
+ffdd_window_new(FfddApplication *app)
+{
+	FfddWindow *win = g_object_new(FFDD_TYPE_WINDOW, "application", app,
+	    NULL);
+
+	return (win);
+}
