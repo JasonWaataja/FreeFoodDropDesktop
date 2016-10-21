@@ -120,13 +120,15 @@
           </packing>
         </child>
         <child>
-          <object class="GtkTreeView">
-            <property name="visible">True</property>
-            <property name="can_focus">True</property>
-            <child internal-child="selection">
-              <object class="GtkTreeSelection" id="results_view"/>
-            </child>
-          </object>
+			<object class="GtkTreeView" id="results_view">
+				<property name="visible">True</property>
+				<property name="can_focus">True</property>
+				<child internal-child="selection">
+					<object class="GtkTreeSelection">
+						<property name="mode">multiple</property>
+					</object>
+				</child>
+			</object>
           <packing>
             <property name="expand">False</property>
             <property name="fill">True</property>

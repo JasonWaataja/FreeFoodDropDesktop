@@ -29,6 +29,8 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
+#include <glib/gi18n.h>
+
 #include "ffddwindow.h"
 
 struct _FfddWindow {
@@ -46,18 +48,33 @@ struct _FfddWindowPrivate {
 	GtkWidget	*type_box;
 	GtkWidget	*search_button;
 	GtkWidget	*results_view;
+	GtkListStore	*results_store;
 };
 
 G_DEFINE_TYPE_WITH_PRIVATE(FfddWindow, ffdd_window,
     GTK_TYPE_APPLICATION_WINDOW);
 
+enum results_view_cols {
+    ADDRESS_COLUMN = 0,
+    NAME_COLUMN,
+    FOOD_COLUMN,
+    TIME_COLUMN,
+    EXTRA_COLUMN,
+    N_COLUMNS
+};
+
 static void
 ffdd_window_init(FfddWindow *win)
 {
-	FfddWindow *priv;
+	FfddWindowPrivate *priv;
 
 	priv = ffdd_window_get_instance_private(win);
 	gtk_widget_init_template(GTK_WIDGET(win));
+
+	ffdd_window_init_results_view(win);
+
+	g_signal_connect_swapped(priv->search_button, "clicked",
+	    G_CALLBACK(ffdd_window_activate_search), win);
 }
 
 static void
@@ -88,4 +105,50 @@ void
 ffdd_window_activate_search(FfddWindow *win)
 {
 	const gchar *address;
+	FfddWindowPrivate *priv;
+
+	priv = ffdd_window_get_instance_private(win);
+
+	address = gtk_entry_get_text(GTK_ENTRY(priv->address_entry));
+}
+
+void
+ffdd_window_init_results_view(FfddWindow *win)
+{
+	FfddWindowPrivate *priv;
+	GtkTreeViewColumn *address_col;
+	GtkTreeViewColumn *name_col;
+	GtkTreeViewColumn *food_col;
+	GtkTreeViewColumn *time_col;
+	GtkTreeViewColumn *extra_col;
+	GtkCellRenderer *text_render;
+
+	priv = ffdd_window_get_instance_private(win);
+	priv->results_store = gtk_list_store_new(N_COLUMNS, G_TYPE_STRING,
+	    G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING);
+	gtk_tree_view_set_model(GTK_TREE_VIEW(priv->results_view),
+	    GTK_TREE_MODEL(priv->results_store));
+
+	text_render = GTK_CELL_RENDERER(gtk_cell_renderer_text_new());
+
+	address_col = gtk_tree_view_column_new_with_attributes(_("Address"),
+	    text_render, "text", ADDRESS_COLUMN, NULL);
+	gtk_tree_view_append_column(GTK_TREE_VIEW(priv->results_view),
+	    address_col);
+	name_col = gtk_tree_view_column_new_with_attributes(_("Name"),
+	    text_render, "text", NAME_COLUMN, NULL);
+	gtk_tree_view_append_column(GTK_TREE_VIEW(priv->results_view),
+	    name_col);
+	food_col = gtk_tree_view_column_new_with_attributes(_("Food"),
+	    text_render, "text", FOOD_COLUMN, NULL);
+	gtk_tree_view_append_column(GTK_TREE_VIEW(priv->results_view),
+	    food_col);
+	time_col = gtk_tree_view_column_new_with_attributes(_("Time"),
+	    text_render, "text", TIME_COLUMN, NULL);
+	gtk_tree_view_append_column(GTK_TREE_VIEW(priv->results_view),
+	    time_col);
+	extra_col = gtk_tree_view_column_new_with_attributes(_("Information"),
+	    text_render, "text", EXTRA_COLUMN, NULL);
+	gtk_tree_view_append_column(GTK_TREE_VIEW(priv->results_view),
+	    extra_col);
 }

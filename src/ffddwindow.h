@@ -47,5 +47,6 @@ GType		 ffdd_window_get_type(void);
 FfddWindow	*ffdd_window_new(FfddApplication *app);
 
 void		 ffdd_window_activate_search(FfddWindow *win);
+void		 ffdd_window_init_results_view(FfddWindow *win);
 
 #endif /* !_FFDWINDOW_H_ */
