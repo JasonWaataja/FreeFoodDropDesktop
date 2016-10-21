@@ -42,6 +42,10 @@ struct _FfddWindowClass {
 typedef struct _FfddWindowPrivate FfddWindowPrivate;
 
 struct _FfddWindowPrivate {
+	GtkWidget	*address_entry;
+	GtkWidget	*type_box;
+	GtkWidget	*search_button;
+	GtkWidget	*results_view;
 };
 
 G_DEFINE_TYPE_WITH_PRIVATE(FfddWindow, ffdd_window,
@@ -61,6 +65,14 @@ ffdd_window_class_init(FfddWindowClass *kclass)
 {
 	gtk_widget_class_set_template_from_resource(GTK_WIDGET_CLASS(kclass),
 	    "/com/waataja/ffdd/ui/mainwindow.ui");
+	gtk_widget_class_bind_template_child_private(GTK_WIDGET_CLASS(kclass),
+	    FfddWindow, address_entry);
+	gtk_widget_class_bind_template_child_private(GTK_WIDGET_CLASS(kclass),
+	    FfddWindow, type_box);
+	gtk_widget_class_bind_template_child_private(GTK_WIDGET_CLASS(kclass),
+	    FfddWindow, search_button);
+	gtk_widget_class_bind_template_child_private(GTK_WIDGET_CLASS(kclass),
+	    FfddWindow, results_view);
 }
 
 FfddWindow *
@@ -70,4 +82,10 @@ ffdd_window_new(FfddApplication *app)
 	    NULL);
 
 	return (win);
+}
+
+void
+ffdd_window_activate_search(FfddWindow *win)
+{
+	const gchar *address;
 }

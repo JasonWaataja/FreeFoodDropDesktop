@@ -46,4 +46,6 @@ typedef struct _FfddWindowClass FfddWindowClass;
 GType		 ffdd_window_get_type(void);
 FfddWindow	*ffdd_window_new(FfddApplication *app);
 
-#endif /* _FFDWINDOW_H_ */
+void		 ffdd_window_activate_search(FfddWindow *win);
+
+#endif /* !_FFDWINDOW_H_ */
