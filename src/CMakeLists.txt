@@ -11,13 +11,6 @@ add_custom_command(OUTPUT resources.c
     COMMAND ${GLIB_COMPILE_RESOURCES}
     ${CMAKE_CURRENT_SOURCE_DIR}/res/ui/ffdd.gresource.xml --target=${CMAKE_CURRENT_BINARY_DIR}/resources.c --sourcedir=${CMAKE_CURRENT_SOURCE_DIR}/res --generate-source)
 
-add_custom_target (resources
-	DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/resources.c)
-
-add_dependencies (ffdd resources)
-
-
-
 pkg_check_modules (GTK3 REQUIRED gtk+-3.0)
 include_directories (${GTK3_INCLUDE_DIRS})
 link_directories (${GTK3_LIBRARY_DIRS})
