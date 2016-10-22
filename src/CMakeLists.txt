@@ -1,4 +1,5 @@
 set (SOURCES main.c ffddapplication.c ffddwindow.c)
+add_executable (ffdd ${SOURCES} resources.c)
 
 find_package (PkgConfig REQUIRED)
 
@@ -10,7 +11,11 @@ add_custom_command(OUTPUT resources.c
     COMMAND ${GLIB_COMPILE_RESOURCES}
     ${CMAKE_CURRENT_SOURCE_DIR}/res/ui/ffdd.gresource.xml --target=${CMAKE_CURRENT_BINARY_DIR}/resources.c --sourcedir=${CMAKE_CURRENT_SOURCE_DIR}/res --generate-source)
 
-add_executable (ffdd ${SOURCES} resources.c)
+add_custom_target (resources
+	DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/resources.c)
+
+add_dependencies (ffdd resources)
+
 
 
 pkg_check_modules (GTK3 REQUIRED gtk+-3.0)
