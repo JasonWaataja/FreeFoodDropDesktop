@@ -30,6 +30,7 @@
  */
 
 #include <sys/socket.h>
+#include <sys/types.h>
 
 #include <netdb.h>
 #include <netinet/in.h>
@@ -40,44 +41,53 @@
 #include <stdio.h>
 #include <string.h>
 #include <err.h>
+#include <glib/gi18n.h>
 
 #include "networking.h"
 
 int
-ffdd_open_socket()
+ffdd_open_socket(GError **err)
 {
 	int sockfd, status;
 	struct addrinfo *serv_info, hints;
 
-	memset(&hints, 0, sizeof(hints));
-	hints.ai_family = AF_UNSPEC;
+	memset(&hints, 0, sizeof(struct addrinfo));
+	hints.ai_family = AF_INET;
 	hints.ai_socktype = SOCK_STREAM;
 
 	status = getaddrinfo(FFDD_SERVER_ADDRESS, FFDD_SERVER_PORT, &hints,
 	    &serv_info);
 
 	if (status == -1) {
-		warn("Failed to create address");
-		return -1;
+		warn(_("Failed to create address"));
+		g_set_error(err, FFDD_CONNECTION_ERROR,
+		    FFDD_CONNECTION_ERROR_ADDRESS, _("Failed to create address"));
+		return (-1);
 	}
 
 	sockfd = socket(serv_info->ai_family, serv_info->ai_socktype,
 	    serv_info->ai_protocol);
 
 	if (sockfd == -1) {
-		warn("Failed to create socket");
+		warn(_("Failed to create socket"));
 		freeaddrinfo(serv_info);
-		return -1;
+		g_set_error(err, FFDD_CONNECTION_ERROR,
+		    FFDD_CONNECTION_ERROR_SOCKET, _("Failed to create socket"));
+		return (-1);
 	}
 
 	status = connect(sockfd, serv_info->ai_addr, serv_info->ai_addrlen);
 
 	if (status == -1) {
-		warn("Failed to connect to server");
+		warn(_("Failed to create socket"));
 		freeaddrinfo(serv_info);
-		return -1;
+		g_set_error(err, FFDD_CONNECTION_ERROR,
+		    FFDD_CONNECTION_ERROR_CONNECT, _("Failed to connect"));
+		return (-1);
 	}
 
+	freeaddrinfo(serv_info);
+	
 	return (sockfd);
 }
 

@@ -37,9 +37,15 @@
 #define	FFDD_SERVER_ADDRESS "127.0.0.1"
 #define FFDD_SERVER_PORT "8110"
 
-#define FFDD_CONNECTION_ERROR ffdd_connection_error_quark();
+#define FFDD_CONNECTION_ERROR ffdd_connection_error_quark()
+
+enum FfddConnectionError {
+	FFDD_CONNECTION_ERROR_ADDRESS,
+	FFDD_CONNECTION_ERROR_SOCKET,
+	FFDD_CONNECTION_ERROR_CONNECT
+};
 
 int	ffdd_open_socket(GError **err);
 GQuark	ffdd_connection_error_quark();
 
-#endif
+#endif /* !_NETWORKING_H_ */

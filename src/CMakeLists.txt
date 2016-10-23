@@ -1,4 +1,4 @@
-set (SOURCES main.c ffddapplication.c ffddwindow.c)
+set (SOURCES main.c ffddapplication.c ffddwindow.c networking.c)
 add_executable (ffdd ${SOURCES} resources.c)
 
 find_package (PkgConfig REQUIRED)
