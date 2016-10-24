@@ -164,6 +164,7 @@ ffdd_window_init_results_view(FfddWindow *win)
 
 void quit_activated(GSimpleAction *action, GVariant *parameter, gpointer win)
 {
+
 	gtk_widget_destroy(GTK_WIDGET(win));
 }
 
@@ -176,7 +177,6 @@ void about_activated(GSimpleAction *action, GVariant *parameter, gpointer win)
       "title", _("About FreeFoodDropDesktop"),
       "authors", authors,
       "copyright", "Copyright (C) 2016 Jason Waataja",
-      /*"license", license,*/
       "license-type", GTK_LICENSE_BSD,
       "version", "Version 0.1.0",
       "website", "https://github.com/JasonWaataja/FreeFoodDropDesktop",
