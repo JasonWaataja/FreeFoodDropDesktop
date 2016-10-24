@@ -63,8 +63,7 @@ enum results_view_cols {
     N_COLUMNS
 };
 
-static GActionEntry win_entries[] =
-{
+static GActionEntry win_entries[] = {
     {"quit", quit_activated, NULL, NULL, NULL},
     {"about", about_activated, NULL, NULL, NULL}
 };
