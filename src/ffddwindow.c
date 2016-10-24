@@ -179,7 +179,7 @@ void about_activated(GSimpleAction *action, GVariant *parameter, gpointer win)
       /*"license", license,*/
       "license-type", GTK_LICENSE_BSD,
       "version", "Version 0.1.0",
-      "website" "https://github.com/JasonWaataja/FreeFoodDropDesktop",
+      "website", "https://github.com/JasonWaataja/FreeFoodDropDesktop",
       "comments", "Desktop client for the FreeFoodDrop system",
       NULL);
 }
