@@ -63,6 +63,12 @@ enum results_view_cols {
     N_COLUMNS
 };
 
+static GActionEntry win_entries[] =
+{
+    {"quit", quit_activated, NULL, NULL, NULL},
+    {"about", about_activated, NULL, NULL, NULL}
+};
+
 static void
 ffdd_window_init(FfddWindow *win)
 {
@@ -75,6 +81,9 @@ ffdd_window_init(FfddWindow *win)
 
 	g_signal_connect_swapped(priv->search_button, "clicked",
 	    G_CALLBACK(ffdd_window_activate_search), win);
+
+	g_action_map_add_action_entries(G_ACTION_MAP(win), win_entries,
+	    G_N_ELEMENTS(win_entries), win);
 }
 
 static void
@@ -151,4 +160,26 @@ ffdd_window_init_results_view(FfddWindow *win)
 	    text_render, "text", EXTRA_COLUMN, NULL);
 	gtk_tree_view_append_column(GTK_TREE_VIEW(priv->results_view),
 	    extra_col);
+}
+
+void quit_activated(GSimpleAction *action, GVariant *parameter, gpointer win)
+{
+	gtk_widget_destroy(GTK_WIDGET(win));
+}
+
+void about_activated(GSimpleAction *action, GVariant *parameter, gpointer win)
+{
+  const gchar *authors[] = { "Jason Waataja", "Justin Frank", NULL };
+
+  gtk_show_about_dialog(GTK_WINDOW (win),
+      "program-name", "FreeFoodDropDesktop",
+      "title", _("About FreeFoodDropDesktop"),
+      "authors", authors,
+      "copyright", "Copyright (C) 2016 Jason Waataja",
+      /*"license", license,*/
+      "license-type", GTK_LICENSE_BSD,
+      "version", "Version 0.1.0",
+      "website" "https://github.com/JasonWaataja/FreeFoodDropDesktop",
+      "comments", "Desktop client for the FreeFoodDrop system",
+      NULL);
 }
