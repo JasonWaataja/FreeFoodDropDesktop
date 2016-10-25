@@ -88,6 +88,7 @@ ffdd_window_init(FfddWindow *win)
 static void
 ffdd_window_class_init(FfddWindowClass *kclass)
 {
+
 	gtk_widget_class_set_template_from_resource(GTK_WIDGET_CLASS(kclass),
 	    "/com/waataja/ffdd/ui/mainwindow.ui");
 	gtk_widget_class_bind_template_child_private(GTK_WIDGET_CLASS(kclass),
