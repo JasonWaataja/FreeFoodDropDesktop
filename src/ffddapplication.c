@@ -57,6 +57,7 @@ ffdd_application_init(FfddApplication *app)
 static void
 ffdd_application_startup(GApplication *app)
 {
+
 	G_APPLICATION_CLASS(ffdd_application_parent_class)->startup(app);
 }
 
@@ -74,6 +75,7 @@ ffdd_application_activate(GApplication *app)
 static void
 ffdd_application_class_init(FfddApplicationClass *kclass)
 {
+
 	G_APPLICATION_CLASS(kclass)->startup = ffdd_application_startup;
 	G_APPLICATION_CLASS(kclass)->activate = ffdd_application_activate;
 }
@@ -81,6 +83,7 @@ ffdd_application_class_init(FfddApplicationClass *kclass)
 FfddApplication *
 ffdd_application_new(void)
 {
+
 	return (g_object_new(FFDD_TYPE_APPLICATION, "application-id",
 	    "com.waataja.ffdd", NULL));
 }
