@@ -48,9 +48,9 @@ FfddWindow	*ffdd_window_new(FfddApplication *app);
 
 void		 ffdd_window_activate_search(FfddWindow *win);
 void		 ffdd_window_init_results_view(FfddWindow *win);
-void		 quit_activated(GSimpleAction *action, GVariant *parameter,
-    gpointer win);
-void		 about_activated(GSimpleAction *action, GVariant *parameter,
-    gpointer win);
+void		 ffdd_window_quit_activated(GSimpleAction *action, GVariant
+    *parameter, gpointer win);
+void		 ffdd_window_about_activated(GSimpleAction *action, GVariant
+    *parameter, gpointer win);
 
 #endif /* !_FFDWINDOW_H_ */

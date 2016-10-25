@@ -64,8 +64,8 @@ enum results_view_cols {
 };
 
 static GActionEntry win_entries[] = {
-    {"quit", quit_activated, NULL, NULL, NULL},
-    {"about", about_activated, NULL, NULL, NULL}
+    {"quit", ffdd_window_quit_activated, NULL, NULL, NULL},
+    {"about", ffdd_window_about_activated, NULL, NULL, NULL}
 };
 
 static void
@@ -162,13 +162,17 @@ ffdd_window_init_results_view(FfddWindow *win)
 	    extra_col);
 }
 
-void quit_activated(GSimpleAction *action, GVariant *parameter, gpointer win)
+void
+ffdd_window_quit_activated(GSimpleAction *action, GVariant *parameter, gpointer
+    win)
 {
 
 	gtk_widget_destroy(GTK_WIDGET(win));
 }
 
-void about_activated(GSimpleAction *action, GVariant *parameter, gpointer win)
+void
+ffdd_window_about_activated(GSimpleAction *action, GVariant *parameter,
+    gpointer win)
 {
   const gchar *authors[] = { "Jason Waataja", "Justin Frank", NULL };
 
