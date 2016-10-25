@@ -94,5 +94,6 @@ ffdd_open_socket(GError **err)
 GQuark
 ffdd_connection_error_quark()
 {
+
 	return (ffdd_connection_error_quark("ffdd-connection-error-quark"));
 }
